@@ -23,4 +23,7 @@ public class Banker {
         this.chips = chips;
     }
 
+    public void printDice() {
+        dice.printDice();
+    }
 }

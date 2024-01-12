@@ -14,4 +14,10 @@ public class Dice {
     public int[] getRolls() {
         return rolls;
     }
+
+    public void printDice() {
+        System.out.println("First roll: " + rolls[0]);
+        System.out.println("Second roll: " + rolls[1]);
+        System.out.println("Third roll: " + rolls[2]);
+    }
 }

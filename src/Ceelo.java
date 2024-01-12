@@ -1,4 +1,5 @@
 import java.io.Console;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.concurrent.CompletionService;
 
@@ -10,12 +11,14 @@ public class Ceelo {
     private Player p2;
     private Player p3;
     private Scanner scan;
+    private int round;
 
     public Ceelo() {
         this.gameOver = false;
         this.highScore = 0;
         this.banker = new Banker();
-        scan = new Scanner(System.in);
+        this.scan = new Scanner(System.in);
+        this.round = 1;
     }
 
     public void play() {
@@ -29,8 +32,8 @@ public class Ceelo {
             wait(1.0);
             ConsoleUtility.clearScreen();
             while (!gameOver) {
-                System.out.print("Banker chips: ");
-                System.out.println(ConsoleUtility.color(String.valueOf(banker.getChips()), "Green"));
+                printStart();
+                printBanker( 1);
             }
         }
 
@@ -50,6 +53,38 @@ public class Ceelo {
         } catch (Exception e) {
             System.out.println("error");
         }
+
+    }
+
+    private void printStart() {
+        System.out.println("""
+                            ____
+                           /\\' .\\    _____
+                          /: \\___\\  / .  /\\
+                          \\' / . / /____/..\\
+                           \\/___/  \\'  '\\  /
+                                    \\'__'\\/
+                """);
+        System.out.println(ConsoleUtility.color("Round : " + round, "Red"));
+    }
+
+    private void printBanker(int stage) {
+        if (stage == 1) {
+            System.out.println(ConsoleUtility.color("------------------BANKER----------------", "Green"));
+            System.out.println("Chips: " + banker.getChips());
+            System.out.println(ConsoleUtility.color("----------------------------------------", "Green"));
+        }
+        if (stage == 2) {
+            System.out.println(ConsoleUtility.color("------------------BANKER----------------", "Green"));
+            System.out.println("Chips: " + banker.getChips());
+            System.out.println();
+            System.out.println("The Banker Rolls: ");
+            banker.printDice();
+            System.out.println(ConsoleUtility.color("----------------------------------------", "Green"));
+        }
+    }
+
+    private void printPlayer() {
 
     }
 }

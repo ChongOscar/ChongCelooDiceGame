@@ -44,4 +44,8 @@ public class Player {
         }
         return dead;
     }
+
+    public void printDice() {
+        dice.printDice();
+    }
 }
