@@ -16,8 +16,11 @@ public class Dice {
     }
 
     public void printDice() {
+        ConsoleUtility.wait(.5);
         System.out.println("First roll: " + rolls[0]);
+        ConsoleUtility.wait(.5);
         System.out.println("Second roll: " + rolls[1]);
+        ConsoleUtility.wait(.5);
         System.out.println("Third roll: " + rolls[2]);
     }
 }

@@ -24,4 +24,13 @@ public class ConsoleUtility {
     public static String color(String str, String color) {
         return colors.get(color) + str + RESET;
     }
+
+    public static void wait(double seconds) {
+        try {
+            Thread.sleep((int) (seconds * 1000));
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
+    }
 }

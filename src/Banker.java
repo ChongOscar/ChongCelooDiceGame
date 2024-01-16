@@ -2,6 +2,7 @@ public class Banker {
     private int chips;
     private Dice dice;
 
+
     public Banker() {
         this.chips = 1000;
         this.dice = new Dice();

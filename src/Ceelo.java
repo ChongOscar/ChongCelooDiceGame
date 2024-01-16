@@ -29,7 +29,7 @@ public class Ceelo {
         ConsoleUtility.clearScreen();
         if (input == 1) {
             System.out.println(ConsoleUtility.color("GAME START", "Red"));
-            wait(1.0);
+            ConsoleUtility.wait(1.0);
             ConsoleUtility.clearScreen();
             while (!gameOver) {
                 printStart();
@@ -47,14 +47,6 @@ public class Ceelo {
         System.out.print("Enter your choice: ");
     }
 
-    private void wait(double seconds) {
-        try {
-            Thread.sleep((int) (seconds * 1000));
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-
-    }
 
     private void printStart() {
         System.out.println("""
@@ -84,7 +76,16 @@ public class Ceelo {
         }
     }
 
-    private void printPlayer() {
+    private void printPlayer(int stage, Player player) {
+        if (stage == 1) {
+            System.out.println(ConsoleUtility.color("------------------PLAYER-" + player + "--------------", "Green"));
+            System.out.println("Chips: " + banker.getChips());
+            System.out.print("How much would you like to wager? ");
+
+            System.out.println(ConsoleUtility.color("----------------------------------------", "Green"));
+        }
+    }
+    private void printWager() {
 
     }
 }
