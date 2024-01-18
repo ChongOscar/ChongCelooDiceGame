@@ -1,18 +1,30 @@
 public class Player {
     private String name;
+    private String number;
+    private String color;
     private int chips;
     private int wager;
     private Dice dice;
     private boolean dead;
     private int score;
 
-    public Player(String name) {
+    public Player(String name, String number) {
         this.name = name;
+        this.number = number;
         this.chips = 100;
         this.wager = 0;
         this.dead = false;
         this.dice = new Dice();
         this.score = -1;
+        if (number.equals("1")) {
+            color = "Red";
+        }
+        if (number.equals("2")) {
+            color = "Blue";
+        }
+        if (number.equals("3")) {
+            color = "Yellow";
+        }
     }
 
     public void setWager(int wager) {
@@ -23,13 +35,8 @@ public class Player {
         return wager;
     }
 
-    public int[] rollDice() {
+    public void rollDice() {
         dice.roll();
-        return dice.getRolls();
-    }
-
-    public int[] getDiceRoll() {
-        return dice.getRolls();
     }
 
     public int getChips() {
@@ -50,31 +57,17 @@ public class Player {
     public void printDice() {
         dice.printDice();
     }
-
-    public void determineScore() {
-        if (dice.getRolls()[0] == 1 && dice.getRolls()[1] == 2 && dice.getRolls()[2] == 3) {
-            score = 0;
-            return;
-        }
-        if (dice.getRolls()[0] == 4 && dice.getRolls()[1] == 5 && dice.getRolls()[2] == 6) {
-            score = 7;
-            return;
-        }
-        if (dice.getRolls()[0] == dice.getRolls()[1]) {
-            score = dice.getRolls()[2];
-            return;
-        }
-        if (dice.getRolls()[1] == dice.getRolls()[2]) {
-            score = dice.getRolls()[0];
-            return;
-        }
-        if (dice.getRolls()[0] == dice.getRolls()[2]) {
-            score = dice.getRolls()[1];
-            return;
-        }
-        score = -1;
-    }
     public int getScore() {
-        return score;
+        return dice.determineScore();
+    }
+
+    public String getNumber() {
+        return  number;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getColor() {
+        return color;
     }
 }
