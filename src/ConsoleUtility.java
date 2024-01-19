@@ -33,4 +33,9 @@ public class ConsoleUtility {
         }
 
     }
+
+    public static void clearLine() {
+        System.out.print("\033[1A\033[2K");
+    }
+
 }

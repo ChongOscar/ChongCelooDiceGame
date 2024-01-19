@@ -43,8 +43,8 @@ public class Player {
         return chips;
     }
 
-    public void setChips(int chips) {
-        this.chips = chips;
+    public void changeChips(int chips) {
+        this.chips = this.chips + chips;
     }
 
     public boolean isDead() {

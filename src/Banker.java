@@ -27,4 +27,7 @@ public class Banker {
     public int getScore() {
         return dice.determineScore();
     }
+    public void changeChips(int chips) {
+        this.chips = this.chips + chips;
+    }
 }

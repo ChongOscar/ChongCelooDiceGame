@@ -9,6 +9,10 @@ public class Dice {
         rolls[0] = (int) (Math.random() * 6) + 1;
         rolls[1] = (int) (Math.random() * 6) + 1;
         rolls[2] = (int) (Math.random() * 6) + 1;
+
+//        rolls[0] = 6;
+//        rolls[1] = 4;
+//        rolls[2] = 5;
     }
 
     public void printDice() {
@@ -20,12 +24,12 @@ public class Dice {
         System.out.println("Third roll: " + rolls[2]);
     }
     public int determineScore() {
-        if (rolls[0] == 1 && rolls[1] == 2 && rolls[2] == 3) {
-            return 0;
-        }
-        if (rolls[0] == 4 && rolls[1] == 5 && rolls[2] == 6) {
+        String strRolls = "" + rolls[0] + rolls[1] + rolls[2];
+        if (strRolls.contains("4") && strRolls.contains("5") && strRolls.contains("6")) {
             return 7;
-
+        }
+        if (strRolls.contains("1") && strRolls.contains("2") && strRolls.contains("3")) {
+            return 0;
         }
         if (rolls[0] == rolls[1]) {
             return rolls[2];
