@@ -32,17 +32,25 @@ public class Player {
     public int getWager() {
         return wager;
     }
-
-    public void rollDice() {
-        dice.roll();
-    }
-
+    
     public int getChips() {
         return chips;
     }
 
-    public void changeChips(int chips) {
-        this.chips = this.chips + chips;
+    public int getScore() {
+        return dice.determineScore();
+    }
+
+    public String getNumber() {
+        return  number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public boolean isDead() {
@@ -52,20 +60,14 @@ public class Player {
         return dead;
     }
 
-    public void printDice() {
-        dice.printDice();
+    public void rollDice() {
+        dice.roll();
     }
-    public int getScore() {
-        return dice.determineScore();
+    public void changeChips(int chips) {
+        this.chips = this.chips + chips;
     }
 
-    public String getNumber() {
-        return  number;
-    }
-    public String getName() {
-        return name;
-    }
-    public String getColor() {
-        return color;
+    public void printDice() {
+        dice.printDice();
     }
 }

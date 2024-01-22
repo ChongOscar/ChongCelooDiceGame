@@ -26,10 +26,10 @@ public class Dice {
     }
     public int determineScore() {
         String strRolls = "" + rolls[0] + rolls[1] + rolls[2];
-        if (strRolls.contains("4") && strRolls.contains("5") && strRolls.contains("6")) {
+        if (strRolls.contains("4") && strRolls.contains("5") && strRolls.contains("6")) { //easy way to find out if the dice are 4, 5, 6 in any order
             return 7;
         }
-        if (strRolls.contains("1") && strRolls.contains("2") && strRolls.contains("3")) {
+        if (strRolls.contains("1") && strRolls.contains("2") && strRolls.contains("3")) { //same way for 1, 2, 3
             return 0;
         }
         if (rolls[0] == rolls[1]) {

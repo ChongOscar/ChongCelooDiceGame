@@ -38,7 +38,7 @@ public class Ceelo {
                 } else if (banker.getScore() == 0) {
                     bankerLose();
                 } else {
-                    determineOutcomes();
+                    playerRolls();
                 }
                 gameOver = isGameOver();
 
@@ -48,24 +48,7 @@ public class Ceelo {
                 System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
                 System.out.println(ConsoleUtility.color("The Banker wins!", "Red"));
             } else if (banker.isDead()) {
-                if ((p1.getChips() > p2.getChips()) && (p1.getChips() > p3.getChips())) {
-                    ConsoleUtility.clearScreen();
-                    System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
-                    System.out.println(ConsoleUtility.color(p1.getName() + " wins!", p1.getColor()));
-                    highScore = p1.getName() + ": " + p1.getChips() + " chips";
-                } else if ((p2.getChips() > p1.getChips()) && (p2.getChips() > p3.getChips())) {
-                    ConsoleUtility.clearScreen();
-                    System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
-                    System.out.println(ConsoleUtility.color(p2.getName() + " wins!", p2.getColor()));
-                    highScore = p2.getName() + ": " + p2.getChips() + " chips";
-                } else if ((p3.getChips() > p2.getChips()) && (p3.getChips() > p2.getChips())) {
-                    ConsoleUtility.clearScreen();
-                    System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
-                    System.out.println(ConsoleUtility.color(p3.getName() + " wins!", p3.getColor()));
-                    highScore = p3.getName() + ": " + p3.getChips() + " chips";
-                } else {
-                    System.out.println(ConsoleUtility.color("It was a tie!", "Purple"));
-                }
+                determineGameWinner();
             }
             System.out.println();
             System.out.println("Press enter to return to the main menu");
@@ -98,12 +81,12 @@ public class Ceelo {
     }
 
     private void printBanker(int stage) {
-        if (stage == 1) {
+        if (stage == 1) {//wager stage
             System.out.println(ConsoleUtility.color("------------------BANKER----------------", "Green"));
             System.out.println("Chips: " + banker.getChips());
             System.out.println(ConsoleUtility.color("----------------------------------------", "Green"));
         }
-        if (stage == 2) {
+        if (stage == 2) { //dice roll stage
             System.out.println(ConsoleUtility.color("------------------BANKER----------------", "Green"));
             System.out.println("Chips: " + banker.getChips());
             System.out.println();
@@ -113,7 +96,7 @@ public class Ceelo {
             if (banker.getScore() == -1) {
                 System.out.println("Banker has to re-roll");
                 ConsoleUtility.wait(1.0);
-                while (banker.getScore() == -1) {
+                while (banker.getScore() == -1) { //clears last 3 rolls 
                     for (int i = 0; i <= 3; i++) {
                         ConsoleUtility.clearLine();
                     }
@@ -140,7 +123,7 @@ public class Ceelo {
     }
 
     private void printPlayer(int stage, Player player) {
-        if (stage == 1) {
+        if (stage == 1) { // wager stage
             System.out.println(ConsoleUtility.color("------------------PLAYER-" + player.getNumber() + "--------------", player.getColor()));
             System.out.println("Player name: " + player.getName());
             System.out.println("Chips: " + player.getChips());
@@ -154,7 +137,7 @@ public class Ceelo {
                 scan.nextLine();
             }
             System.out.println(ConsoleUtility.color("----------------------------------------", player.getColor()));
-        } else if (stage == 2) {
+        } else if (stage == 2) { //dice roll stage
             System.out.println(ConsoleUtility.color("------------------PLAYER-" + player.getNumber() + "--------------", player.getColor()));
             System.out.println("Player name: " + player.getName());
             System.out.println("Chips: " + player.getChips());
@@ -167,7 +150,7 @@ public class Ceelo {
             if (player.getScore() == -1) {
                 System.out.println(player.getName() + " has to re-roll");
                 ConsoleUtility.wait(1.0);
-                while (player.getScore() == -1) {
+                while (player.getScore() == -1) { // clears last 3 rolls
                     for (int i = 0; i <= 3; i++) {
                         ConsoleUtility.clearLine();
                     }
@@ -275,7 +258,7 @@ public class Ceelo {
         }
     }
 
-    private void determineOutcomes() {
+    private void playerRolls() {
         if (!p1.isDead()) {
             printPlayer(2, p1);
         }
@@ -307,6 +290,27 @@ public class Ceelo {
         System.out.println();
         System.out.print("Press enter to continue");
         scan.nextLine();
+    }
+
+    private void determineGameWinner() {
+        if ((p1.getChips() > p2.getChips()) && (p1.getChips() > p3.getChips())) {
+            ConsoleUtility.clearScreen();
+            System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+            System.out.println(ConsoleUtility.color(p1.getName() + " wins!", p1.getColor()));
+            highScore = p1.getName() + ": " + p1.getChips() + " chips";
+        } else if ((p2.getChips() > p1.getChips()) && (p2.getChips() > p3.getChips())) {
+            ConsoleUtility.clearScreen();
+            System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+            System.out.println(ConsoleUtility.color(p2.getName() + " wins!", p2.getColor()));
+            highScore = p2.getName() + ": " + p2.getChips() + " chips";
+        } else if ((p3.getChips() > p2.getChips()) && (p3.getChips() > p2.getChips())) {
+            ConsoleUtility.clearScreen();
+            System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+            System.out.println(ConsoleUtility.color(p3.getName() + " wins!", p3.getColor()));
+            highScore = p3.getName() + ": " + p3.getChips() + " chips";
+        } else {
+            System.out.println(ConsoleUtility.color("It was a tie!", "Purple"));
+        }
     }
 
     private boolean isGameOver() {
