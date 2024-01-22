@@ -10,9 +10,9 @@ public class Dice {
         rolls[1] = (int) (Math.random() * 6) + 1;
         rolls[2] = (int) (Math.random() * 6) + 1;
 
-//        rolls[0] = 6;
-//        rolls[1] = 4;
-//        rolls[2] = 5;
+    //    rolls[0] = 6;
+    //    rolls[1] = 2;
+    //    rolls[2] = 5;
     }
 
     public void printDice() {
@@ -22,6 +22,7 @@ public class Dice {
         System.out.println("Second roll: " + rolls[1]);
         ConsoleUtility.wait(.5);
         System.out.println("Third roll: " + rolls[2]);
+        ConsoleUtility.wait(.5);
     }
     public int determineScore() {
         String strRolls = "" + rolls[0] + rolls[1] + rolls[2];

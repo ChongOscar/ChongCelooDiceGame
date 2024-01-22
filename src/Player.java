@@ -6,7 +6,6 @@ public class Player {
     private int wager;
     private Dice dice;
     private boolean dead;
-    private int score;
 
     public Player(String name, String number) {
         this.name = name;
@@ -15,7 +14,6 @@ public class Player {
         this.wager = 0;
         this.dead = false;
         this.dice = new Dice();
-        this.score = -1;
         if (number.equals("1")) {
             color = "Red";
         }

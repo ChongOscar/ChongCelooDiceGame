@@ -2,7 +2,6 @@ public class Banker {
     private int chips;
     private Dice dice;
 
-    private int score;
 
 
     public Banker() {
@@ -29,5 +28,12 @@ public class Banker {
     }
     public void changeChips(int chips) {
         this.chips = this.chips + chips;
+    }
+
+    public boolean isDead() {
+        if (chips <= 0) {
+            return true;
+        }
+        return false;
     }
 }

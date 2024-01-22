@@ -1,11 +1,9 @@
-import java.io.Console;
-import java.sql.SQLOutput;
+
 import java.util.Scanner;
-import java.util.concurrent.CompletionService;
 
 public class Ceelo {
     private boolean gameOver;
-    private int highScore;
+    private String highScore;
     private Banker banker;
     private Player p1;
     private Player p2;
@@ -14,12 +12,13 @@ public class Ceelo {
 
     public Ceelo() {
         this.gameOver = false;
-        this.highScore = 0;
+        this.highScore = "N/A";
         this.banker = new Banker();
         this.scan = new Scanner(System.in);
     }
 
     public void play() {
+        ConsoleUtility.clearScreen();
         int input;
         printMainMenu();
         input = scan.nextInt();
@@ -27,7 +26,7 @@ public class Ceelo {
         ConsoleUtility.clearScreen();
         getNames();
         if (input == 1) {
-            System.out.println(ConsoleUtility.color("GAME START", "Red"));
+            System.out.println(ConsoleUtility.color("GAME START", "Green"));
             ConsoleUtility.wait(2.0);
             ConsoleUtility.clearScreen();
             while (!gameOver) {
@@ -41,7 +40,39 @@ public class Ceelo {
                 } else {
                     determineOutcomes();
                 }
+                gameOver = isGameOver();
+
             }
+            if (p1.isDead() && p2.isDead() && p3.isDead()) {
+                ConsoleUtility.clearScreen();
+                System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+                System.out.println(ConsoleUtility.color("The Banker wins!", "Red"));
+            } else if (banker.isDead()) {
+                if ((p1.getChips() > p2.getChips()) && (p1.getChips() > p3.getChips())) {
+                    ConsoleUtility.clearScreen();
+                    System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+                    System.out.println(ConsoleUtility.color(p1.getName() + " wins!", p1.getColor()));
+                    highScore = p1.getName() + ": " + p1.getChips() + " chips";
+                } else if ((p2.getChips() > p1.getChips()) && (p2.getChips() > p3.getChips())) {
+                    ConsoleUtility.clearScreen();
+                    System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+                    System.out.println(ConsoleUtility.color(p2.getName() + " wins!", p2.getColor()));
+                    highScore = p2.getName() + ": " + p2.getChips() + " chips";
+                } else if ((p3.getChips() > p2.getChips()) && (p3.getChips() > p2.getChips())) {
+                    ConsoleUtility.clearScreen();
+                    System.out.println(ConsoleUtility.color("GAME OVER", "Red"));
+                    System.out.println(ConsoleUtility.color(p3.getName() + " wins!", p3.getColor()));
+                    highScore = p3.getName() + ": " + p3.getChips() + " chips";
+                } else {
+                    System.out.println(ConsoleUtility.color("It was a tie!", "Purple"));
+                }
+            }
+            System.out.println();
+            System.out.println("Press enter to return to the main menu");
+            scan.nextLine();
+            gameOver = false;
+            banker = new Banker();
+            play();
         }
 
     }
@@ -76,7 +107,7 @@ public class Ceelo {
             System.out.println(ConsoleUtility.color("------------------BANKER----------------", "Green"));
             System.out.println("Chips: " + banker.getChips());
             System.out.println();
-            System.out.println("The Banker Rolls: ");
+            System.out.println("The Banker rolls: ");
             banker.rollDice();
             banker.printDice();
             if (banker.getScore() == -1) {
@@ -88,8 +119,13 @@ public class Ceelo {
                     }
                     banker.rollDice();
                     banker.printDice();
+                    if (banker.getScore()== -1) {
+                        System.out.println("Banker has to re-roll");
+                    }
+                    ConsoleUtility.wait(1.0);
                 }
-            } else if (banker.getScore() == 7) {
+            }
+             if (banker.getScore() == 7) {
                 System.out.println(ConsoleUtility.color("The banker wins!", "Red"));
                 ConsoleUtility.wait(1.0);
             } else if (banker.getScore() == 0) {
@@ -124,6 +160,8 @@ public class Ceelo {
             System.out.println("Chips: " + player.getChips());
             System.out.print("Press enter to roll the dice! ");
             scan.nextLine();
+            System.out.println();
+            System.out.println("The Player rolls:");
             player.rollDice();
             player.printDice();
             if (player.getScore() == -1) {
@@ -135,14 +173,21 @@ public class Ceelo {
                     }
                     player.rollDice();
                     player.printDice();
+                    if (player.getScore() == -1) {
+                        System.out.println(player.getName() + " has to re-roll");
+                    }
+                    ConsoleUtility.wait(1.0);
                 }
             }
             if (player.getScore() == 7) {
                 System.out.println(ConsoleUtility.color("The player wins!", "Green"));
+                ConsoleUtility.wait(1.0);
             } else if (player.getScore() == 0) {
                 System.out.println(ConsoleUtility.color("The player loses!", "Red"));
+                ConsoleUtility.wait(1.0);
             } else {
                 System.out.println("The player's score is " + player.getScore());
+                ConsoleUtility.wait(1.0);
             }
             System.out.println(ConsoleUtility.color("----------------------------------------", player.getColor()));
         }
@@ -179,12 +224,21 @@ public class Ceelo {
     private void bankerWin() {
         System.out.println(ConsoleUtility.color(p1.getName() + " lost " + p1.getWager() + " chips!", p1.getColor()));
         p1.changeChips(-p1.getWager());
+        if (p1.isDead()) {
+            System.out.println(ConsoleUtility.color(p1.getName() + " is OUT!", p1.getColor()));
+        }
         ConsoleUtility.wait(1.0);
         System.out.println(ConsoleUtility.color(p2.getName() + " lost " + p2.getWager() + " chips!", p2.getColor()));
         p2.changeChips(-p2.getWager());
+        if (p2.isDead()) {
+            System.out.println(ConsoleUtility.color(p2.getName() + " is OUT!", p2.getColor()));
+        }
         ConsoleUtility.wait(1.0);
         System.out.println(ConsoleUtility.color(p3.getName() + " lost " + p3.getWager() + " chips!", p3.getColor()));
         p3.changeChips(-p3.getWager());
+        if (p3.isDead()) {
+            System.out.println(ConsoleUtility.color(p3.getName() + " is OUT!", p3.getColor()));
+        }
         ConsoleUtility.wait(1.0);
         banker.changeChips(p1.getWager() + p2.getWager() + p3.getWager());
         System.out.println();
@@ -211,16 +265,14 @@ public class Ceelo {
             System.out.println(ConsoleUtility.color(player.getName() + " lost " + player.getWager() + " chips!", player.getColor()));
             player.changeChips(-player.getWager());
             banker.changeChips(player.getWager());
+            
             ConsoleUtility.wait(1.0);
-        } else if (banker.getScore() < player.getScore()) {
+        } else if (banker.getScore() <= player.getScore()) {
             System.out.println(ConsoleUtility.color(player.getName() + " won " + player.getWager() + " chips!", player.getColor()));
             player.changeChips(player.getWager());
             banker.changeChips(-player.getWager());
             ConsoleUtility.wait(1.0);
         }
-    }
-    private void printPlayerOut(Player player) {
-        System.out.println(player.getName() + "is OUT!");
     }
 
     private void determineOutcomes() {
@@ -236,21 +288,31 @@ public class Ceelo {
         System.out.println();
         if (!p1.isDead()) {
             determinePlayerWin(p1);
-        } else {
-            printPlayerOut(p1);
+        } 
+        if (p1.isDead()) {
+            System.out.println(ConsoleUtility.color(p1.getName() + " is OUT!", p1.getColor()));
         }
         if (!p2.isDead()) {
             determinePlayerWin(p2);
-        } else {
-            printPlayerOut(p2);
+        } 
+        if (p2.isDead()) {
+            System.out.println(ConsoleUtility.color(p2.getName() + " is OUT!", p2.getColor()));
         }
         if (!p3.isDead()) {
             determinePlayerWin(p3);
-        } else {
-            printPlayerOut(p3);
+        } 
+        if (p3.isDead()) {
+            System.out.println(ConsoleUtility.color(p3.getName() + " is OUT!", p3.getColor()));
         }
         System.out.println();
         System.out.print("Press enter to continue");
         scan.nextLine();
+    }
+
+    private boolean isGameOver() {
+        if ((p1.isDead() && p2.isDead() && p3.isDead()) || banker.isDead()) {
+            return true;
+        }
+        return false;
     }
 }
